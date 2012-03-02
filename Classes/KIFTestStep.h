@@ -60,6 +60,18 @@ enum {
 };
 typedef NSInteger KIFTestStepResult;
 
+// TODO !!!
+/*!
+ @enum KIFTestTextInputMode
+ @abstract Indicates how text should be entered into a view.
+ @constant KIFTestTextInputModeReplace Indicates that the text in the view should be cleared before the new text is entered.
+ @constant KIFTestTextInputModeAppend Indicates that the new text should be appended to the text already in the view.
+ */
+enum {
+    KIFTestTextInputModeReplace = 0,
+    KIFTestTextInputModeAppend
+};
+typedef NSInteger KIFTestTextInputMode;
 
 @class KIFTestStep;
 
@@ -327,16 +339,17 @@ typedef KIFTestStepResult (^KIFTestStepExecutionBlock)(KIFTestStep *step, NSErro
 + (id)stepToEnterText:(NSString *)text intoViewWithAccessibilityLabel:(NSString *)label;
 
 /*!
- @method stepToEnterText:intoViewWithAccessibilityLabel:traits:
+ @method stepToEnterText:intoViewWithAccessibilityLabel:traits:mode:expectedResult
  @abstract A step that enters text into a particular view in the view hierarchy.
  @discussion The view or accessibility element with the given label is searched for in the view hierarchy. If the element isn't found or isn't currently tappable, then the step will attempt to wait until it is. Once the view is present and tappable, a tap event is simulated in the center of the view or element, then text is entered into the view by simulating taps on the appropriate keyboard keys.
  @param text The text to enter.
  @param label The accessibility label of the element to type into.
  @param traits The accessibility traits of the element to type into. Elements that do not include at least these traits are ignored.
+ @param mode Indicates whether the text should be appended to or deleted before the new text is entered.
  @param expectedResult What the text value should be after entry, including any formatting done by the field. If this is nil, the "text" parameter will be used.
  @result A configured test step.
  */
-+ (id)stepToEnterText:(NSString *)text intoViewWithAccessibilityLabel:(NSString *)label traits:(UIAccessibilityTraits)traits expectedResult:(NSString *)expectedResult;
++ (id)stepToEnterText:(NSString *)text intoViewWithAccessibilityLabel:(NSString *)label traits:(UIAccessibilityTraits)traits mode:(KIFTestTextInputMode)mode expectedResult:(NSString *)expectedResult;
 
 /*!
  @method stepToSelectPickerViewRowWithTitle:

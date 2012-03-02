@@ -73,4 +73,13 @@
  */
 - (CGPoint)tappablePointInRect:(CGRect)rect;
 
+/*!
+ @method tappablePointInViewFarBottomRight;
+ @abstract Finds a point in the receiver that is tappable as close to the bottom right of the view as possible.
+ @discussion Finds a tappable point in the receiver as close to the bottom right of the view as possible. Tappable is defined as a point that, when tapped, will hit the receiver. This is especially useful when needing to append text to view that already contains text.
+ @result A tappable point in the receiver's frame coordinates.
+ */
+- (CGPoint)tappablePointInViewFarBottomRight;
+
+
 @end

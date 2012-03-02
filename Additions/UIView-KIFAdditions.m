@@ -435,6 +435,31 @@
     return CGPointMake(NAN, NAN);
 }
 
+- (CGPoint)tappablePointInViewFarBottomRight;
+{
+    // Start at the top and recurse down
+    CGRect frame = self.frame;
+
+    UIView *hitView = nil;
+    CGPoint tapPoint = CGPointZero;
+    CGFloat offsetY = 0.0f;
+    CGFloat offsetX = 0.0f;
+
+    // Start at the bottom right of the view and work our way up until we find a tappable point in the view
+    for (offsetY=0; offsetY < frame.size.height; offsetY++) {
+        for (offsetX=0; offsetX < frame.size.width; offsetX++) {
+            
+            tapPoint = CGPointMake(frame.origin.x + frame.size.width - offsetX, frame.origin.y + frame.size.height - offsetY);
+            hitView = [self.window hitTest:tapPoint withEvent:nil];
+            if ([self isTappableWithHitTestResultView:hitView]) {
+                return [self.window convertPoint:tapPoint toView:self];
+            }
+        }
+    }
+
+    return CGPointMake(NAN, NAN);
+}
+
 - (UIEvent *)_eventWithTouch:(UITouch *)touch;
 {
     UIEvent *event = [[UIApplication sharedApplication] performSelector:@selector(_touchesEvent)];
