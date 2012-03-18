@@ -437,7 +437,6 @@
 
 - (CGPoint)tappablePointInViewFarBottomRight;
 {
-    // Start at the top and recurse down
     CGRect frame = self.frame;
 
     UIView *hitView = nil;
